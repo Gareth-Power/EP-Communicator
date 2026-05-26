@@ -17,7 +17,6 @@ Examples:
 - coaching an embedded participant during a scenario
 - feeding lines or prompts to a plant
 - giving separate instructions to two different listeners
-- running low-friction audio cues without extra comms hardware
 
 ## How It Works
 
@@ -45,19 +44,18 @@ Because the APK is distributed outside the Google Play Store, Android may descri
 
 ## First-Time Setup
 
-1. Connect your audio output device.
+1. Connect your bluetooth earphones.
 2. Give one person the left earphone.
 3. Give the other person the right earphone.
 4. Open the app.
 5. Allow microphone access when prompted.
-6. Confirm the input and output device labels shown at the top of the screen.
 
 For best results, test the audio routing before starting a live scenario.
 
 ## Recommended Use
 
 - Use a physical Android phone rather than an emulator.
-- Use wired headphones, USB audio, or Bluetooth audio output depending on your setup.
+- Use "true-wireless" bluetooth earphones.
 - Keep the phone close enough for clear microphone pickup.
 - Run a quick left/right check with both listeners before the session begins.
 - Make sure the phone has enough battery for the full scenario.
@@ -70,7 +68,7 @@ The app requests microphone permission because it needs live audio input from th
 
 - The screen is kept awake while the app is open.
 - The app is designed to be simple and full-screen so it can be used quickly during teaching sessions.
-- Device labels are shown on screen to help confirm which input and output routes are active.
+- Editable labels are availble to indicate who has each earphone.
 
 ## Troubleshooting
 
@@ -80,7 +78,7 @@ If audio is not working as expected:
 - confirm the earphones are connected properly
 - verify which device is shown as the active output
 - test both left and right buttons before use
-- disconnect and reconnect Bluetooth or wired audio if routing looks wrong
+- disconnect and reconnect Bluetooth if routing looks wrong
 
 ## Releases
 
