@@ -381,9 +381,10 @@ private class MicPassthrough(
     private fun runLoop(channel: Channel, sessionId: Long) {
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
-        // Avoid BT SCO mic routing.
+        // Keep BT headsets in A2DP output-only mode: never enable SCO/HFP.
+        // Also enable the "voice communication" processing path (AEC/NS/AGC where available)
+        // while keeping capture on the phone mic.
         try {
-            am.mode = AudioManager.MODE_NORMAL
             @Suppress("DEPRECATION")
             am.stopBluetoothSco()
             @Suppress("DEPRECATION")
@@ -391,6 +392,10 @@ private class MicPassthrough(
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 am.clearCommunicationDevice()
             }
+
+            am.mode = AudioManager.MODE_IN_COMMUNICATION
+            @Suppress("DEPRECATION")
+            am.isSpeakerphoneOn = false
         } catch (_: Throwable) {
         }
 
@@ -402,7 +407,7 @@ private class MicPassthrough(
         val inBufBytes = (minInBuf * 2).coerceAtLeast(sampleRate / 10)
 
         val audioRecord = AudioRecord(
-            MediaRecorder.AudioSource.VOICE_RECOGNITION,
+            MediaRecorder.AudioSource.VOICE_COMMUNICATION,
             sampleRate,
             inChannelConfig,
             pcmEncoding,
@@ -551,6 +556,14 @@ private class MicPassthrough(
             }
             audioRecord.release()
             audioTrack.release()
+
+            // Reset audio mode after running so we don't affect other apps.
+            try {
+                am.mode = AudioManager.MODE_NORMAL
+                @Suppress("DEPRECATION")
+                am.isSpeakerphoneOn = false
+            } catch (_: Throwable) {
+            }
 
             // Only clear stopRequested if we are still the current session.
             if (isCurrentSession(sessionId)) {
